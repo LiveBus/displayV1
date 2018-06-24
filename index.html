@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="refresh" content="5" >
+        <title>LiveBus</title>
+
+        <base href="index.html" target="_blank">
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <meta http-equiv="refresh" top="5" > refresh every five seconds -->
+        <meta name="description" content="Live Bus information from MBTA API">
+
+        <link rel="stylesheet" type="text/css" href="stylesheet.css">
     </head>
 
     <body>
-        <p>hello world</p>
+        <div id="set">
+        </div>
+        <div id="run">
+        </div>
+
+        <!-- scripts (placed at the end of the body b/c apparently it's faster) -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="stop.js"></script>
+        <script type="text/javascript" src="runner.js"></script>
+        <script type="text/javascript">
+            /*var stop = new Stop(2316);
+            stop.update_dynamic();
+            stop.update_static();*/
+            
+        </script>
     </body>
 </html>
