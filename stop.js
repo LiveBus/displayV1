@@ -7,9 +7,9 @@ function Stop(stopID) {
     this.pending = {};
 }
 
-Stop.prototype.init = function(on_complete = function () {}) {
+Stop.prototype.init = function() {
     this.update_static();
-    this.update(on_complete);
+    this.update();
 }
 
 // update the static data (stop title, routes, etc)
@@ -99,15 +99,20 @@ Stop.prototype.get_predictions = function(n=3) {
     return html;
 }
 
+// Update handler
+Stop.prototype.update_handler = function() {
+    console.log("unhandled update");
+}
+
 // Update and run function when done
-Stop.prototype.update = function(on_complete = function() {console.log("unhandled update");}, t=10) {
+Stop.prototype.update = function(t=10) {
     this.update_dynamic();
     clearInterval(this.interval);
     var cthis = this;
     this.interval = setInterval(function () {
         if(cthis.requests_done()) {
             clearInterval(cthis.interval);
-            on_complete();
+            cthis.update_handler();
         }
     }, t);
 }

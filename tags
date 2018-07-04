@@ -1,0 +1,53 @@
+S	Session.vim	/^imap S <Plug>ISurround$/;"	m
+s	Session.vim	/^imap s <Plug>Isurround$/;"	m
+	Session.vim	/^imap  <Plug>Isurround$/;"	m
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+0	Session.vim	/^normal! 0$/;"	m
+010|	Session.vim	/^normal! 010|$/;"	m
+<Plug>NetrwBrowseX	Session.vim	/^nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(expand((exists("g:netrw_gx")? g:netrw_gx : '<cfile>')),netrw#CheckIfRemote())$/;"	m
+<Plug>NetrwBrowseXVis	Session.vim	/^vnoremap <silent> <Plug>NetrwBrowseXVis :call netrw#BrowseXVis()$/;"	m
+<Plug>SurroundRepeat	Session.vim	/^nnoremap <silent> <Plug>SurroundRepeat .$/;"	m
+SessionLoad	Session.vim	/^let SessionLoad = 1$/;"	v
+Stop	stop.js	/^function Stop(stopID) {$/;"	c
+Stop	stopDep.js	/^function Stop(id, stopNum) {$/;"	c
+cS	Session.vim	/^nmap cS <Plug>CSurround$/;"	m
+cs	Session.vim	/^nmap cs <Plug>Csurround$/;"	m
+ds	Session.vim	/^nmap ds <Plug>Dsurround$/;"	m
+get_predictions	stop.js	/^Stop.prototype.get_predictions = function(n=3) {$/;"	m	class:Stop
+get_stops	runner.js	/^var get_stops = function(longitude=42.39, latitude=71.12) {$/;"	f
+get_title	stop.js	/^Stop.prototype.get_title = function() {$/;"	m	class:Stop
+gx	Session.vim	/^nmap gx <Plug>NetrwBrowseX$/;"	m
+gx	Session.vim	/^vmap gx <Plug>NetrwBrowseXVis$/;"	m
+init	stop.js	/^Stop.prototype.init = function(on_complete = function () {}) {$/;"	m	class:Stop
+intervals	runner.js	/^var intervals = [];$/;"	v
+post	runner.js	/^var post = function() {$/;"	f
+postPredictions	stopDep.js	/^  this.postPredictions = function(pred) {$("#stop" + this.stopNum + ".predictions").html(stop.stringify_predictions());}$/;"	m	class:Stop
+postTitle	stopDep.js	/^  this.postTitle  = function(title) {$("#stop" + this.stopNum + ".title").html(title);};$/;"	m	class:Stop
+requests_done	stop.js	/^Stop.prototype.requests_done = function() {$/;"	m	class:Stop
+s:cpo_save	Session.vim	/^let s:cpo_save=&cpo$/;"	v
+s:l	Session.vim	/^let s:l = 1 - ((0 * winheight(0) + 16) \/ 32)$/;"	v
+s:l	Session.vim	/^let s:l = 3 - ((2 * winheight(0) + 16) \/ 32)$/;"	v
+s:l	Session.vim	/^let s:l = 5 - ((4 * winheight(0) + 16) \/ 32)$/;"	v
+s:so_save	Session.vim	/^let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0$/;"	v
+s:sx	Session.vim	/^let s:sx = expand("<sfile>:p:r")."x.vim"$/;"	v
+s:wipebuf	Session.vim	/^  let s:wipebuf = bufnr('%')$/;"	v
+send_json	stop.js	/^Stop.prototype.send_json = function(name, filter = "?filter[stop]=") {$/;"	m	class:Stop
+stringify_predictions	stopDep.js	/^Stop.prototype.stringify_predictions = function() {$/;"	m	class:Stop
+update	stop.js	/^Stop.prototype.update = function(on_complete = function() {console.log("unhandled update");}, t=10) {$/;"	m	class:Stop
+update	stopDep.js	/^Stop.prototype.update = function() {$/;"	m	class:Stop
+update_dynamic	stop.js	/^Stop.prototype.update_dynamic = function() {$/;"	m	class:Stop
+update_predictions	stopDep.js	/^Stop.prototype.update_predictions = function(stop) {$/;"	m	class:Stop
+update_static	stop.js	/^Stop.prototype.update_static = function() {$/;"	m	class:Stop
+update_title	stopDep.js	/^Stop.prototype.update_title = function(stop) {$/;"	m	class:Stop
+url_base	stop.js	/^var url_base = "https:\/\/api-v3.mbta.com\/"; $/;"	v
+yS	Session.vim	/^nmap yS <Plug>YSurround$/;"	m
+ySS	Session.vim	/^nmap ySS <Plug>YSsurround$/;"	m
+ySs	Session.vim	/^nmap ySs <Plug>YSsurround$/;"	m
+ys	Session.vim	/^nmap ys <Plug>Ysurround$/;"	m
+yss	Session.vim	/^nmap yss <Plug>Yssurround$/;"	m
+zt	Session.vim	/^normal! zt$/;"	m
