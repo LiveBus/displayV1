@@ -1,3 +1,4 @@
+// DEPRICATED -- it works, but is not dynamic enough
 function Stop(id, stopNum) {
   this.id = id;
   this.stopNum = stopNum;

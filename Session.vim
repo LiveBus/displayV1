@@ -52,14 +52,14 @@ badd +1 README.md
 badd +1 stop.js
 badd +1 stylesheet.css
 badd +1 update.js
-badd +11 runner.js
+badd +1 runner.js
 argglobal
 silent! argdel *
 argadd index.html
-argadd README.md
-argadd stop.js
-argadd stylesheet.css
 argadd update.js
+argadd stylesheet.css
+argadd stop.js
+argadd README.md
 set stal=2
 edit stylesheet.css
 set splitbelow splitright
@@ -309,7 +309,6 @@ normal! zt
 18
 normal! 022|
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 68 + 68) / 136)
 exe 'vert 2resize ' . ((&columns * 67 + 68) / 136)
 tabedit runner.js
@@ -325,6 +324,7 @@ set winheight=1 winwidth=1
 exe '1resize ' . ((&lines * 18 + 19) / 39)
 exe '2resize ' . ((&lines * 17 + 19) / 39)
 argglobal
+edit runner.js
 setlocal keymap=
 setlocal noarabic
 setlocal noautoindent
@@ -434,11 +434,11 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 33 - ((8 * winheight(0) + 9) / 18)
+let s:l = 28 - ((9 * winheight(0) + 9) / 18)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-33
+28
 normal! 0
 wincmd w
 argglobal
@@ -561,7 +561,7 @@ normal! 0
 wincmd w
 exe '1resize ' . ((&lines * 18 + 19) / 39)
 exe '2resize ' . ((&lines * 17 + 19) / 39)
-tabnext 1
+tabnext 2
 set stal=1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
