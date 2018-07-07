@@ -92,7 +92,7 @@ Stop.prototype.get_predictions = function(n=3) {
         for(var i = 0; i < n && i < pred[key].length; i++) {
             html += "<li>" + pred[key][i] + "</li>";
         }
-        html += "</ul>";
+        html += "</ul><br>";
     }
     html += "</ul>";
 
