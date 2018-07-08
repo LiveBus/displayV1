@@ -1,6 +1,22 @@
-// TODO: Get stops based on long and lat
-var get_stops = function(longitude=42.39, latitude=71.12) {
-    return [new Stop(110), new Stop(2316), new Stop(2451)];
+var stops = [];
+var init_all_stops = function() {
+    stops = get_stops();
+    for(i in stops) {
+        // Initialize each stop
+        add_stop(stops[i].stopID);
+        set_post_stop_func(i);
+        stops[i].init();
+    }
+}
+
+var get_stops = function() {
+    var stoplist = [];
+    $("input").each(function(index) {
+        if(this.value != "")
+            stoplist.push(new Stop(this.value));
+    });
+    console.log(stoplist);
+    return stoplist;
 }
 
 // Sends and waits for requests before updating #run
@@ -33,17 +49,10 @@ var add_stop = function(id) {
     $("#run").html(run_html);
 }
 
-var stops = get_stops();
-for(i in stops) {
-    // Initialize each stop
-    add_stop(stops[i].stopID);
-    set_post_stop_func(i);
-    stops[i].init();
-}
 
-window.onerror = function (msg, url, lineNo, columnNo, error) {
-      // ... handle error ...
-    console.log(Error.prototype.stack);
-    console.log(stops);
-    return false;
-}
+//window.onerror = function (msg, url, lineNo, columnNo, Error) {
+//      // ... handle error ...
+//    console.log(Error.prototype.stack);
+//    console.log(stops);
+//    return false;
+//}
