@@ -23,3 +23,7 @@ li {
 /*#run ul ul, #run ul ul * {
     display:inline;
 }*/
+
+#run {
+    display:none;
+}

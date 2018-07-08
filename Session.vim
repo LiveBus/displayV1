@@ -39,7 +39,6 @@ set showcmd
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 set tabstop=4
 set wildmenu
-set window=35
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
@@ -54,14 +53,14 @@ badd +1 stop.js
 badd +1 stylesheet.css
 badd +1 update.js
 badd +1 runner.js
-badd +0 setctl.js
+badd +1 setctl.js
 argglobal
 silent! argdel *
 argadd index.html
-argadd update.js
-argadd stylesheet.css
-argadd stop.js
 argadd README.md
+argadd stop.js
+argadd stylesheet.css
+argadd update.js
 set stal=2
 edit stylesheet.css
 set splitbelow splitright
@@ -186,12 +185,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 20 - ((18 * winheight(0) + 16) / 33)
+let s:l = 29 - ((28 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-20
-normal! 027|
+29
+normal! 0
 wincmd w
 argglobal
 edit index.html
@@ -304,12 +303,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 31 - ((22 * winheight(0) + 16) / 33)
+let s:l = 23 - ((14 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-31
-normal! 053|
+23
+normal! 022|
 wincmd w
 exe 'vert 1resize ' . ((&columns * 68 + 68) / 136)
 exe 'vert 2resize ' . ((&columns * 67 + 68) / 136)
@@ -436,11 +435,11 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 41 - ((22 * winheight(0) + 16) / 33)
+let s:l = 6 - ((5 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-41
+6
 normal! 0
 wincmd w
 argglobal
@@ -554,12 +553,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 97 - ((21 * winheight(0) + 16) / 33)
+let s:l = 89 - ((18 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-97
-normal! 018|
+89
+normal! 062|
 wincmd w
 exe 'vert 1resize ' . ((&columns * 68 + 68) / 136)
 exe 'vert 2resize ' . ((&columns * 67 + 68) / 136)
@@ -680,13 +679,13 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 10 - ((9 * winheight(0) + 16) / 33)
+let s:l = 13 - ((12 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-10
-normal! 014|
-tabnext 3
+13
+normal! 0
+tabnext 2
 set stal=1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
