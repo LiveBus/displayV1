@@ -21,14 +21,12 @@ $("#start_run").on("click", function() {
     state = "run";
     $("#set").hide("slow");
     $("#run").show("slow");
-    start();
 });
 
 $("#stop_run").on("click", function() {
     state = "set";
     $("#run").hide("slow");
     $("#set").show("slow");
-    clearInterval(interval);
 });
 
 function cookieInit() {
