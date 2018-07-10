@@ -49,18 +49,19 @@ endif
 set shortmess=aoO
 badd +8 index.html
 badd +1 README.md
-badd +1 stop.js
+badd +89 stop.js
 badd +1 stylesheet.css
 badd +1 update.js
 badd +1 runner.js
 badd +1 setctl.js
+badd +0 jquery.js
 argglobal
 silent! argdel *
 argadd index.html
-argadd README.md
-argadd stop.js
-argadd stylesheet.css
 argadd update.js
+argadd stylesheet.css
+argadd stop.js
+argadd README.md
 set stal=2
 edit stylesheet.css
 set splitbelow splitright
@@ -185,11 +186,11 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 30 - ((29 * winheight(0) + 16) / 33)
+let s:l = 32 - ((31 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-30
+32
 normal! 0
 wincmd w
 argglobal
@@ -303,28 +304,22 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 24 - ((15 * winheight(0) + 16) / 33)
+let s:l = 28 - ((18 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-24
-normal! 09|
+28
+normal! 053|
 wincmd w
 2wincmd w
 exe 'vert 1resize ' . ((&columns * 68 + 68) / 136)
 exe 'vert 2resize ' . ((&columns * 67 + 68) / 136)
 tabedit runner.js
 set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 68 + 68) / 136)
-exe 'vert 2resize ' . ((&columns * 67 + 68) / 136)
 argglobal
 edit runner.js
 setlocal keymap=
@@ -442,7 +437,12 @@ exe s:l
 normal! zt
 47
 normal! 015|
-wincmd w
+tabedit stop.js
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
 argglobal
 edit stop.js
 setlocal keymap=
@@ -487,7 +487,8 @@ setlocal foldexpr=0
 setlocal foldignore=#
 setlocal foldlevel=0
 setlocal foldmarker={{{,}}}
-setlocal foldmethod=manual
+set foldmethod=indent
+setlocal foldmethod=indent
 setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
@@ -553,16 +554,16 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-silent! normal! zE
-let s:l = 99 - ((12 * winheight(0) + 16) / 33)
+73
+normal! zo
+91
+normal! zo
+let s:l = 91 - ((26 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-99
-normal! 016|
-wincmd w
-exe 'vert 1resize ' . ((&columns * 68 + 68) / 136)
-exe 'vert 2resize ' . ((&columns * 67 + 68) / 136)
+91
+normal! 053|
 tabedit setctl.js
 set splitbelow splitright
 set nosplitbelow

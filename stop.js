@@ -88,7 +88,7 @@ Stop.prototype.get_predictions = function(n=3) {
     // htmlify the predictions
     var html = "<h2>" + this["stops"].attributes.name + "</h2><ul>";
     for(key in pred) {
-        html += "<li>" + key + "</li><ul>";
+        html += "<li>" + key + " bus to " + "dest" + "</li><ul>";
         for(var i = 0; i < n && i < pred[key].length; i++) {
             html += "<li>" + pred[key][i] + "</li>";
         }
