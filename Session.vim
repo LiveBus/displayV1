@@ -54,14 +54,14 @@ badd +1 stylesheet.css
 badd +1 update.js
 badd +1 runner.js
 badd +1 setctl.js
-badd +0 jquery.js
+badd +1 jquery.js
 argglobal
 silent! argdel *
 argadd index.html
-argadd update.js
-argadd stylesheet.css
-argadd stop.js
 argadd README.md
+argadd stop.js
+argadd stylesheet.css
+argadd update.js
 set stal=2
 edit stylesheet.css
 set splitbelow splitright
@@ -186,7 +186,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 32 - ((31 * winheight(0) + 16) / 33)
+let s:l = 32 - ((30 * winheight(0) + 16) / 32)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -304,7 +304,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 28 - ((18 * winheight(0) + 16) / 33)
+let s:l = 28 - ((17 * winheight(0) + 16) / 32)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -431,7 +431,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 47 - ((18 * winheight(0) + 16) / 33)
+let s:l = 47 - ((17 * winheight(0) + 16) / 32)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -558,7 +558,7 @@ setlocal wrapmargin=0
 normal! zo
 91
 normal! zo
-let s:l = 91 - ((26 * winheight(0) + 16) / 33)
+let s:l = 91 - ((25 * winheight(0) + 16) / 32)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -614,6 +614,7 @@ setlocal foldexpr=0
 setlocal foldignore=#
 setlocal foldlevel=0
 setlocal foldmarker={{{,}}}
+set foldmethod=indent
 setlocal foldmethod=manual
 setlocal foldminlines=1
 setlocal foldnestmax=20
@@ -681,7 +682,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 48 - ((20 * winheight(0) + 16) / 33)
+let s:l = 48 - ((19 * winheight(0) + 16) / 32)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt

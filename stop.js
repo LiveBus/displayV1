@@ -85,6 +85,11 @@ Stop.prototype.get_predictions = function(n=3) {
             Math.floor((new Date((p.attributes.departure_time == null ? p.attributes.arrival_time : p.attributes.departure_time)) - now)/60000));
     }
 
+    // Sort each route's predictions
+    for(var key in pred) {
+        pred[key] = pred[key].sort(function(a, b){return a-b});
+    }
+
     // htmlify the predictions
     var html = "<h2>" + this["stops"].attributes.name + "</h2><ul>";
     for(key in pred) {
