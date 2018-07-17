@@ -93,11 +93,18 @@ Stop.prototype.get_predictions = function(n=3) {
     // htmlify the predictions
     var html = "<h2>" + this["stops"].attributes.name + "</h2><ul>";
     for(key in pred) {
-        html += "<li>" + key + " bus to " + "dest" + "</li><ul>";
-        for(var i = 0; i < n && i < pred[key].length; i++) {
+        html += "<div class=\"bus\"><li><h1 class=\"busnum\">" + key + "</h1><div class=\"busdest\">" + "dest" + "</div></li><ul>";
+        // next bus
+        if(pred[key][0] != null) {
+            html += "<li class=\"buspred\">" + pred[key][0] + " mins</li>";
+        } else {
+            html += "<li class=\"buspred\">no predictions</li>";
+        }
+        // other up to n busses
+        for(var i = 1; i < n && i < pred[key].length; i++) {
             html += "<li>" + pred[key][i] + "</li>";
         }
-        html += "</ul><br>";
+        html += "</ul></div>";
     }
     html += "</ul>";
 
