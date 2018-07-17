@@ -68,20 +68,24 @@ Stop.prototype.get_title = function() {
     return this["stops"].attributes.name;
 }
 
-// null -> no predictions
-// 0 -> now arriving
-// 1 -> now approaching
+// null -> No Predictions
+// 1- -> Boarding
+// 0  -> Arriving
+// 1  -> Approaching
 // 2+ -> 2+ mins
 function nextpredf(val) {
     switch(val) {
         case undefined:
             return "No Predictions";
         case 0:
-            return "Now Arriving";
+            return "Arriving";
         case 1:
-            return "Now Approaching";
+            return "Approaching";
         default:
-            return val + " mins";
+            if(val > 1)
+                return val + " mins";
+            else
+                return "Boarding";
     }
 }
 

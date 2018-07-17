@@ -9,6 +9,13 @@ var init_all_stops = function() {
     }
 }
 
+setInterval(function() {
+    for(i in stops) {
+        stops[i].update();
+    }
+    console.log("updated" + new Date());
+},10000);
+
 var get_stops = function() {
     var stoplist = [];
     $("input").each(function(index) {
