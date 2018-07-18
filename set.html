@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LiveBus Settings</title>
+
+        <base href="index.html" target="_blank">
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <meta http-equiv="refresh" top="5" > refresh every five seconds -->
+        <meta name="description" content="Live Bus information from MBTA API">
+    </head>
+
+    <body>
+        <div id="set">
+            <form>stops:
+            </form>
+            <button id="add_stop">add</button>
+            <button id="start_run" onclick="window.location.href='https://livebus.github.io/index.html'">run</button>
+        </div>
+        <!-- scripts (placed at the end of the body b/c apparently it's faster) -->
+        <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="setctl.js"></script>
+    </body>
+</html>

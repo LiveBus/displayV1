@@ -13,7 +13,7 @@ setInterval(function() {
     for(i in stops) {
         stops[i].update();
     }
-    console.log("updated" + new Date());
+    console.log("Updating all stops (" + new Date() + ")");
 },10000);
 
 var get_stops = function() {

@@ -31,12 +31,12 @@ $("#add_stop").on("click", function() {
 //    }
 //});
 
-$("#start_run").on("click", function() {
-    state = "run";
-    $("#set").hide("slow");
-    $("#run").show("slow");
-    init_all_stops();
-});
+//$("#start_run").on("click", function() {
+//    state = "run";
+//    $("#set").hide("slow");
+//    $("#run").show("slow");
+//    init_all_stops();
+//});
 
 //$("#stop_run").on("click", function() {
 //    state = "set";
