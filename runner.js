@@ -18,10 +18,13 @@ setInterval(function() {
 
 var get_stops = function() {
     var stoplist = [];
-    $("input").each(function(index) {
-        if(this.value != "")
-            stoplist.push(new Stop(this.value));
-    });
+    for(var i = 0; getCookie("stop" + i); i++) {
+        stoplist.push(new Stop(getCookie("stop" + i)));
+    }
+//    $("input").each(function(index) {
+//        if(this.value != "")
+//            stoplist.push(new Stop(this.value));
+//    });
     console.log(stoplist);
     return stoplist;
 }
@@ -63,3 +66,5 @@ var add_stop = function(id) {
 //    console.log(stops);
 //    return false;
 //}
+console.log("check 1");
+init_all_stops();

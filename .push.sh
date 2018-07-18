@@ -2,5 +2,5 @@
 git add --all;
 git diff HEAD | less;
 git commit;
-git push -u origin master;
+git push -u origin gh-pages;
 vim -S Session.vim;
