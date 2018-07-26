@@ -19,6 +19,9 @@ Stop.prototype.update_static = function() {
 
     // Get general stop data
     this.send_json("stops", "/");
+
+    // Get schedules through stop
+    this.send_json("schedules");
 }
 
 // update the dynamic data (predictions, alerts, etc)
@@ -92,6 +95,8 @@ function nextpredf(val) {
 // Get the predictions in html list format from already pulled data
 Stop.prototype.get_predictions = function(n=3) {
     var pred = {};
+
+    console.log(this);
     
     // Get all of the routes
     for(var i = 0; i < this["routes"].length; i++) {
@@ -102,6 +107,8 @@ Stop.prototype.get_predictions = function(n=3) {
     var now = new Date();
     for(var i = 0; i < this["predictions"].length; i++) {
         var p = this["predictions"][i];
+        console.log(p);
+        console.log(p.relationships.route.data.id);
         pred[p.relationships.route.data.id].push(
             Math.floor((new Date((p.attributes.departure_time == null ? p.attributes.arrival_time : p.attributes.departure_time)) - now)/60000));
     }

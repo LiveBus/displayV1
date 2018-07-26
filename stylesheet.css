@@ -1,32 +1,14 @@
 * {
-    border: 1px solid black;
     border-radius: 20px;
     padding: 2px;
     font-family: Impact, Charcoal, sans-serif;
 }
+
 li {
     list-style-type:none;
+    border: 1px solid black;
 }
 
-.stop {
-    background-color: blue;
-}
-
-.stop ul li {
-    background-color: red;
-}
-
-.stop ul ul li {
-    background-color: green;
-}
-
-/*#run ul ul, #run ul ul * {
-    display:inline;
-}*/
-
-#run {
-    /*display:none;*/
-}
 
 input {
     width: 60px;
@@ -38,7 +20,6 @@ input {
 
 
 h1.busnum  {
-    background-color:orange;
     display:inline-block;
     width:50%;
     text-align: center;
@@ -48,7 +29,6 @@ h1.busnum  {
 
 div.busdest  {
     display:inline-block;
-    background-color:pink;
     width:49%;
     text-align: center;
 }
@@ -61,9 +41,6 @@ li.buspred {
     width:50%;
     font-size: 25px;
     text-align: center;
-}
-
-.bus {
 }
 
 .stop {

@@ -6,7 +6,7 @@ add_input_listner();
 function add_input_listner() {
     $("input").on("input", function() {
         $("input").each(function(index) {
-            setCookie("stop" + index, this.value, 1);
+            setCookie("stop" + index, this.value, 100);
             console.log(getCookie("stop" + index));
         });
     });
