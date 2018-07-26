@@ -1,6 +1,6 @@
 var n = 0;
 var current = 0;
-function startrot(speed = 5000) {
+function startrot(speed = 7000) {
     n = $(".stop").length;
 
     // only show first stop
