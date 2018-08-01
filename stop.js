@@ -30,7 +30,7 @@ Stop.prototype.update_dynamic = function() {
     console.log("updating stop: " + this.stopID);
 
     // Get prediction data
-    this.send_json("predictions");
+    this.send_json("predictions", "?include=schedule&filter[stop]=");
 }
 
 // General JSON reqest send -- searches for stopID
