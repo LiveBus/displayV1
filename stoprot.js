@@ -4,14 +4,14 @@ function startrot(speed = 7000) {
     n = $(".stop").length;
 
     // only show first stop
-    $(".stop").eq(current).show("slow");
+    $(".stop").eq(current).show();
     for(i = 1; i < n; i++) {
-        $(".stop").eq(i).hide("slow");
+        $(".stop").eq(i).hide();
     }
 
     setInterval(function() {
-        $(".stop").eq(current).slideToggle("slow");
-        $(".stop").eq((current + 1) % n).slideToggle("slow");
+        $(".stop").eq(current).hide();
+        $(".stop").eq((current + 1) % n).show();
         current = (current + 1) % n;
     }, speed);
 }
