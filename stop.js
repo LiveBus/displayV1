@@ -1,4 +1,5 @@
 var url_base = "https://api-v3.mbta.com/"; 
+var api_key = "f1c9a9fe82734f6c947ec7caf7bde669";
 
 // Constructor
 function Stop(stopID) {
@@ -43,9 +44,18 @@ Stop.prototype.send_json = function(name, filter = "?filter[stop]=") {
     // Add to pending list
     cthis.pending[name] = true;
 
+    var url = url_base + name + filter + this.stopID;
+    if(filter.indexOf("?") == -1) {
+        url += "?api_key=" + api_key;
+    }
+    else {
+        url += "&api_key=" + api_key;
+    }
+
+    console.log(url);
     // Send request and add to requests list
     cthis.requests[name] = $.getJSON(
-            url_base + name + filter + this.stopID,
+            url,
             function(data) {
                 cthis[name] = data.data;
             }
