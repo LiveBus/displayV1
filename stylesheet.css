@@ -23,7 +23,7 @@ input {
 
 h1.busnum  {
     display:inline-block;
-    width:10%;
+    width:100px;
     text-align: center;
     font-size: 40px;
     margin:0px;
