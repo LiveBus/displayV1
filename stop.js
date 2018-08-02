@@ -16,13 +16,13 @@ Stop.prototype.init = function() {
 // update the static data (stop title, routes, etc)
 Stop.prototype.update_static = function() {
     // Get route data
-    this.send_json("routes");
+    this.send_json("routes", "?include=stop&filter[stop]=");
 
     // Get general stop data
     this.send_json("stops", "/");
 
     // Get schedules through stop
-    this.send_json("schedules");
+    //this.send_json("schedules");
 }
 
 // update the dynamic data (predictions, alerts, etc)
@@ -123,6 +123,7 @@ Stop.prototype.get_predictions = function(n=3) {
     for(var key in pred) {
         pred[key] = pred[key].sort(function(a, b){return a-b});
     }
+    console.log(pred);
 
     // htmlify the predictions
     var html = "<h2>" + this["stops"].attributes.name + "</h2><ul>";
