@@ -58,6 +58,9 @@ Stop.prototype.send_json = function(name, filter = "?filter[stop]=") {
             url,
             function(data) {
                 cthis[name] = data.data;
+                if('included' in data) {
+                    cthis[name + "_inc"] = data.included;
+                }
             }
             )
         .always(function() {
@@ -87,19 +90,29 @@ Stop.prototype.requests_done = function() {
 // 1  -> Approaching
 // 2+ -> 2+ mins
 function predf(val) {
-    switch(val) {
-        case undefined:
-            return "No Predictions";
-        case 0:
-            return "Arriving";
-        case 1:
-            return "Approaching";
-        default:
-            if(val > 1)
-                return val + " mins";
-            else
-                return "Boarding";
+    var disp = "";
+    if(val == undefined) {
+        return "No Predictions";
     }
+    switch(val.time) {
+        case 0:
+            disp += "Arriving";
+            break;
+        case 1:
+            disp += "Approaching";
+            break;
+        default:
+            console.log("default");
+            if(val.time > 1)
+                disp += val.time + " mins";
+            else
+                disp += "Boarding";
+            break; 
+    }
+    if(val.type == "schedule") {
+        disp += "*";
+    }
+    return disp;
 }
 
 // Get the predictions in html list format from already pulled data
@@ -116,12 +129,21 @@ Stop.prototype.get_predictions = function(n=3) {
     for(var i = 0; i < this["predictions"].length; i++) {
         var p = this["predictions"][i];
         pred[p.relationships.route.data.id].push(
-            Math.floor((new Date((p.attributes.departure_time == null ? p.attributes.arrival_time : p.attributes.departure_time)) - now)/60000));
+            {"time":Math.floor((new Date((p.attributes.departure_time == null ? p.attributes.arrival_time : p.attributes.departure_time)) - now)/60000),
+             "type":"prediction"
+            });
+    }
+    for(var i = 0; i < this["predictions_inc"].length; i++) {
+        var p = this["predictions_inc"][i];
+        pred[p.relationships.route.data.id].push(
+            {"time":Math.floor((new Date((p.attributes.departure_time == null ? p.attributes.arrival_time : p.attributes.departure_time)) - now)/60000),
+             "type":"schedule"
+            });
     }
 
     // Sort each route's predictions
     for(var key in pred) {
-        pred[key] = pred[key].sort(function(a, b){return a-b});
+        pred[key] = pred[key].sort(function(a, b){return a.time-b.time});
     }
     console.log(pred);
 
