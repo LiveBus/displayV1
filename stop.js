@@ -126,7 +126,7 @@ Stop.prototype.get_predictions = function(n=3) {
     console.log(pred);
 
     // htmlify the predictions
-    var html = "<h2>" + this["stops"].attributes.name + "</h2><ul>";
+    var html = "<h2 class=\"stoptitle\">" + this["stops"].attributes.name + "</h2><p>stop ID: " + this.stopID + "</p><ul>";
     for(key in pred) {
         html += "<div class=\"bus\"><li><h1 class=\"busnum\">" + key + "</h1><div class=\"busdest\">" + outbound[key] + " - " + inbound[key] + "</div></li><ul>";
         // up to n busses
