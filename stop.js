@@ -77,16 +77,16 @@ Stop.prototype.requests_done = function() {
 }
 
 // Get the title from the already pulled data
-Stop.prototype.get_title = function() {
-    return this["stops"].attributes.name;
-}
+// Stop.prototype.get_title = function() {
+//     return this["stops"].attributes.name;
+// }
 
 // null -> No Predictions
 // 1- -> Boarding
 // 0  -> Arriving
 // 1  -> Approaching
 // 2+ -> 2+ mins
-function nextpredf(val) {
+function predf(val) {
     switch(val) {
         case undefined:
             return "No Predictions";
@@ -128,12 +128,10 @@ Stop.prototype.get_predictions = function(n=3) {
     // htmlify the predictions
     var html = "<h2>" + this["stops"].attributes.name + "</h2><ul>";
     for(key in pred) {
-        html += "<div class=\"bus\"><li><h1 class=\"busnum\">" + key + "</h1><div class=\"busdest\">" + "dest" + "</div></li><ul>";
-        // next bus
-        html += "<li class=\"buspred\">" + nextpredf(pred[key][0]) + "</li>";
-        // other up to n busses
-        for(var i = 1; i < n && i < pred[key].length; i++) {
-            html += "<li>" + pred[key][i] + "</li>";
+        html += "<div class=\"bus\"><li><h1 class=\"busnum\">" + key + "</h1><div class=\"busdest\">" + outbound[key] + " - " + inbound[key] + "</div></li><ul>";
+        // up to n busses
+        for(var i = 0; i == 0 || (i < n && i < pred[key].length); i++) {
+            html += "<li class=\"buspred\">" + predf(pred[key][i]) + "</li>";
         }
         html += "</ul></div>";
     }

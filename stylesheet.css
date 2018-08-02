@@ -6,9 +6,11 @@
 
 li {
     list-style-type:none;
-    border: 1px solid black;
 }
 
+.bus {
+    border: 1px solid black;
+}
 
 input {
     width: 60px;
@@ -21,16 +23,18 @@ input {
 
 h1.busnum  {
     display:inline-block;
-    width:50%;
+    width:10%;
     text-align: center;
     font-size: 40px;
     margin:0px;
+    background-color:yellow;
 }
 
 div.busdest  {
     display:inline-block;
-    width:49%;
-    text-align: center;
+    text-align: left;
+    font-size:25px;
+    padding-left:3%;
 }
 
 .bus ul li {
@@ -38,7 +42,7 @@ div.busdest  {
 }
 
 li.buspred {
-    width:50%;
+    width:200px;
     font-size: 25px;
     text-align: center;
 }
