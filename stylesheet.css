@@ -75,3 +75,11 @@ p {
 ul {
     margin:0px;
 }
+
+#SchedNote {
+    position:absolute;
+    bottom:0px;
+    right:20px;
+    float:bottom;
+    font-size:20px;
+}

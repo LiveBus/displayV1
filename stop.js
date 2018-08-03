@@ -102,7 +102,6 @@ function predf(val) {
             disp += "Approaching";
             break;
         default:
-            console.log("default");
             if(val.time > 1)
                 disp += val.time + " mins";
             else
