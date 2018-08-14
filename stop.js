@@ -97,7 +97,6 @@ function predf(val) {
         disp += val.time + " mins";
     else
         disp += "Arriving";
-    break; 
     if(val.type == "schedule") {
         disp += "*";
     }
