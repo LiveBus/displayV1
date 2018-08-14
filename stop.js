@@ -85,29 +85,19 @@ Stop.prototype.requests_done = function() {
 // }
 
 // null -> No Predictions
-// 1- -> Boarding
-// 0  -> Arriving
-// 1  -> Approaching
-// 2+ -> 2+ mins
+// 1+   -> [1+] mins
+// 0-   -> Arriving
+// Adds * for scheduled times
 function predf(val) {
     var disp = "";
     if(val == undefined) {
         return "No Predictions";
     }
-    switch(val.time) {
-        case 0:
-            disp += "Arriving";
-            break;
-        case 1:
-            disp += "Approaching";
-            break;
-        default:
-            if(val.time > 1)
-                disp += val.time + " mins";
-            else
-                disp += "Boarding";
-            break; 
-    }
+    if(val.time > 1)
+        disp += val.time + " mins";
+    else
+        disp += "Arriving";
+    break; 
     if(val.type == "schedule") {
         disp += "*";
     }
