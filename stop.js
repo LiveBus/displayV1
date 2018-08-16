@@ -80,11 +80,6 @@ Stop.prototype.requests_done = function() {
     return true;
 }
 
-// Get the title from the already pulled data
-// Stop.prototype.get_title = function() {
-//     return this["stops"].attributes.name;
-// }
-
 // null -> No Predictions
 // 1+   -> [1+] mins
 // 0-   -> Arriving
@@ -139,7 +134,7 @@ Stop.prototype.get_predictions = function(n=3) {
     // htmlify the predictions
     var html = "<h2 class=\"stoptitle\">" + this["stops"].attributes.name + "</h2><p>stop ID: " + this.stopID + "</p><ul>";
     for(key in pred) {
-        var dest = outbound[key] + " - " + inbound[key];
+        var dest = outbound[key] + " <--> " + inbound[key];
 	    if(this.stopID in hard_ids) {
             dest = (hard_ids[this.stopID][key] == 0) ? outbound[key] : inbound[key];
         }
