@@ -139,8 +139,12 @@ Stop.prototype.get_predictions = function(n=3) {
     // htmlify the predictions
     var html = "<h2 class=\"stoptitle\">" + this["stops"].attributes.name + "</h2><p>stop ID: " + this.stopID + "</p><ul>";
     for(key in pred) {
-        html += "<div class=\"bus\"><li><h1 class=\"busnum\">" + key + "</h1><div class=\"busdest\">" + outbound[key] + " - " + inbound[key] + "</div></li><ul>";
-        // up to n busses
+        var dest = outbound[key] + " - " + inbound[key];
+	    if(this.stopID in hard_ids) {
+            dest = (hard_ids[this.stopID][key] == 0) ? outbound[key] : inbound[key];
+        }
+        html += "<div class=\"bus\"><li><h1 class=\"busnum\">" + key + "</h1><div class=\"busdest\">" + dest + "</div></li><ul>";
+        // add n predictions/scheduled arrivals
         for(var i = 0; i == 0 || (i < n && i < pred[key].length); i++) {
             html += "<li class=\"buspred\">" + predf(pred[key][i]) + "</li>";
         }
