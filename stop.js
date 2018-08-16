@@ -6,6 +6,7 @@ function Stop(stopID) {
     this.stopID = stopID;
     this.requests = {};
     this.pending = {};
+    this.affix = "<div id=\"SchedNote\">*Scheduled Arrivals</div>"
 }
 
 Stop.prototype.init = function() {
@@ -146,6 +147,8 @@ Stop.prototype.get_predictions = function(n=3) {
         html += "</ul></div>";
     }
     html += "</ul>";
+
+    html += this.affix;
 
     return html;
 }
