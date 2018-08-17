@@ -32,7 +32,7 @@ Stop.prototype.update_dynamic = function() {
 
     var now = new Date();
     // Get prediction data
-    this.send_json("schedules", "?include=prediction&page[limit]=100&filter[stop]=");
+    this.send_json("schedules", "?include=prediction&filter[stop]=");
 }
 
 // General JSON reqest send -- searches for stopID
