@@ -1,10 +1,15 @@
 {
-  "name": "LiveBus MBTA Display",
-  "short_name": "LiveBus",
-  "start_url": "/index.html",
-  "display": "fullscreen",
-  "background_color": "yellow",
-  "description": "LiveBus MBTA gives realtime data to pedestrians through the help of local businesses.",
-  "dir": "ltr",
-  "lang": "en-US"
+    "name": "LiveBus MBTA Display",
+    "short_name": "LiveBus",
+    "start_url": "/index.html",
+    "display": "fullscreen",
+    "background_color": "yellow",
+    "description": "LiveBus MBTA gives realtime data to pedestrians through the help of local businesses.",
+    "icons": [{
+        "src": "icon144.png",
+        "sizes": "144x144",
+        "type": "image/png"
+    }],
+    "dir": "ltr",
+    "lang": "en-US"
 }
