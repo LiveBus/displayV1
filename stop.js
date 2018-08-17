@@ -30,8 +30,9 @@ Stop.prototype.update_static = function() {
 Stop.prototype.update_dynamic = function() {
     console.log("updating stop: " + this.stopID);
 
+    var now = new Date();
     // Get prediction data
-    this.send_json("predictions", "?include=schedule&filter[stop]=");
+    this.send_json("schedules", "?include=prediction&page[limit]=100&filter[stop]=");
 }
 
 // General JSON reqest send -- searches for stopID
@@ -108,26 +109,28 @@ Stop.prototype.get_predictions = function(n=3) {
         pred[this["routes"][i].attributes.short_name] = [];
     }
 
-    // Sort predictions into routes
+    // Sort predictions/schedules into routes
     var now = new Date();
-    for(var i = 0; i < this["predictions"].length; i++) {
-        var p = this["predictions"][i];
+    for(var i = 0; i < this["schedules"].length; i++) {
+        var p = this["schedules"][i];
+        var type = "schedule";
+        for(var j = 0; "schedules_inc" in this && j < this["schedules_inc"].length; j++) {
+            q = this["schedules_inc"][j];
+            if(p.relationships.trip.data.id == q.relationships.trip.data.id) {
+                p=q;
+                type = "prediction";
+            }
+        }
         pred[p.relationships.route.data.id].push(
             {"time":Math.floor((new Date((p.attributes.departure_time == null ? p.attributes.arrival_time : p.attributes.departure_time)) - now)/60000),
-             "type":"prediction"
-            });
-    }
-    for(var i = 0; i < this["predictions_inc"].length; i++) {
-        var p = this["predictions_inc"][i];
-        pred[p.relationships.route.data.id].push(
-            {"time":Math.floor((new Date((p.attributes.departure_time == null ? p.attributes.arrival_time : p.attributes.departure_time)) - now)/60000),
-             "type":"schedule"
+             "type":type
             });
     }
 
     // Sort each route's predictions
     for(var key in pred) {
-        pred[key] = pred[key].sort(function(a, b){return a.time-b.time});
+        pred[key] = pred[key].filter(function(val, i, arr) {return val.time > 0;});
+        pred[key] = pred[key].sort(function(a, b){return a.time-b.time;});
     }
     console.log(pred);
 
