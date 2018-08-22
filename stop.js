@@ -157,11 +157,9 @@ function set_page_max() {
     var b = $(".stoptitle").eq(current).height();
     b += $(".stoptitle").eq(current).next().height();
     var m = $(".stop:eq(" + current + ") .bus:eq(0)").height();
-    var y = $(window).height() - 100;
-    console.log(b + " " + m + " " + y);
+    var y = $(window).height() - 125;
     page_max = Math.floor((y-b)/m);
     page_max = (page_max < 1) ? 1 : page_max;
-    console.log(page_max);
 }
 setTimeout(redraw, 1000);
 $(window).resize(redraw);
