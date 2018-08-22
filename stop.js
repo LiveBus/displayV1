@@ -1,174 +1,140 @@
 var url_base = "https://api-v3.mbta.com/"; 
 var api_key = "f1c9a9fe82734f6c947ec7caf7bde669";
+stopIDs = [];
+var display = {};
 
-// Constructor
-function Stop(stopID) {
-    this.stopID = stopID;
-    this.requests = {};
-    this.pending = {};
-    this.affix = "<div id=\"SchedNote\">*Scheduled Arrivals</div>"
+for(var i = 0; getCookie("stop" + i); i++) {
+    stopIDs.push(getCookie("stop" + i));
 }
 
-Stop.prototype.init = function() {
-    this.update_static();
-    this.update();
-}
-
-// update the static data (stop title, routes, etc)
-Stop.prototype.update_static = function() {
-    // Get route data
-    this.send_json("routes", "?include=stop&filter[stop]=");
-
-    // Get general stop data
-    this.send_json("stops", "/");
-
-    // Get schedules through stop
-    //this.send_json("schedules");
-}
-
-// update the dynamic data (predictions, alerts, etc)
-Stop.prototype.update_dynamic = function() {
-    console.log("updating stop: " + this.stopID);
-
-    var now = new Date();
-    // Get prediction data
-    this.send_json("schedules", "?include=prediction&filter[stop]=");
-}
-
-// General JSON reqest send -- searches for stopID
-// name must be the first string in the url (routes, predictions, etc)
-// filter can be left blank, or "/", etc
-// Adds "name: [json response]" as attribute to object
-Stop.prototype.send_json = function(name, filter = "?filter[stop]=") {
-    // Clone this for use within JSON request
-    var cthis = this;
-
-    // Add to pending list
-    cthis.pending[name] = true;
-
-    var url = url_base + name + filter + this.stopID;
-    if(filter.indexOf("?") == -1) {
-        url += "?api_key=" + api_key;
+// Query ends in stopID, and adds api key
+var send_json = function(query = "?filter[stop]=") {
+    var ids = stopIDs[0];
+    for(var i = 1; i < stopIDs.length; i++) {
+        ids += "," + stopIDs[i];
     }
-    else {
-        url += "&api_key=" + api_key;
-    }
-
+    var url = url_base + query + ids + "&api_key=" + api_key;
     console.log(url);
     // Send request and add to requests list
-    cthis.requests[name] = $.getJSON(
-            url,
-            function(data) {
-                cthis[name] = data.data;
-                if('included' in data) {
-                    cthis[name + "_inc"] = data.included;
-                }
-            }
-            )
-        .always(function() {
-            cthis.pending[name] = false;
-        });
+    $.getJSON(url, updateDOM);
 }
 
-// Checks if all of the requests are done
-Stop.prototype.requests_done = function() {
-    for(var req in this.pending) {
-        if(this.pending[req]) {
-            return false;
+// Deal with the response
+var updateDOM = function(data) {
+    console.log(data);
+
+    var trip_dest = {};
+    // Create display structure
+    // pull stops
+    for(var i = 0 ; i < data.included.length ; i++) {
+        var inc = data.included[i];
+        // create outer shell for stops
+        if(inc.type == "stop") {
+            display[inc.id] = 
+                {
+                    name: inc.attributes.name,
+                    routes: []
+                };
         }
+        // map trip id's to headsigns
+        else if(inc.type == "trip") {
+            trip_dest[inc.id] = inc.attributes.headsign;
+        }
+        else { continue; }
+        data.included.splice(i,1);
+        i--;
     }
-    console.log("updated stop " + this.stopID + " (" + (new Date()) + ")");
-    return true;
-}
-
-// null -> No Predictions
-// 1+   -> [1+] mins
-// 0-   -> Arriving
-// Adds * for scheduled times
-function predf(val) {
-    var disp = "";
-    if(val == undefined) {
-        return "No Predictions";
-    }
-    if(val.time > 1)
-        disp += val.time + " mins";
-    else
-        disp += "Arriving";
-    if(val.type == "schedule") {
-        disp += "*";
-    }
-    return disp;
-}
-
-// Get the predictions in html list format from already pulled data
-Stop.prototype.get_predictions = function(n=3) {
-    var pred = {};
-
-    // Get all of the routes
-    for(var i = 0; i < this["routes"].length; i++) {
-        pred[this["routes"][i].attributes.short_name] = [];
-    }
-
-    // Sort predictions/schedules into routes
     var now = new Date();
-    for(var i = 0; i < this["schedules"].length; i++) {
-        var p = this["schedules"][i];
-        var type = "schedule";
-        for(var j = 0; "schedules_inc" in this && j < this["schedules_inc"].length; j++) {
-            q = this["schedules_inc"][j];
-            if(p.relationships.trip.data.id == q.relationships.trip.data.id) {
-                p=q;
-                type = "prediction";
+
+    var all_arrivals = data.data.concat(data.included);
+
+    // Process predictions
+    for(var i = 0; i < all_arrivals.length; i++) {
+        var pred = all_arrivals[i];
+        // skip all of the schedules which alread 
+        if("prediction" in pred.relationships &&  pred.relationships.prediction.data != null) {
+            continue;
+        }
+        var stop = pred.relationships.stop.data.id;
+        var dest = trip_dest[pred.relationships.trip.data.id];
+        var route = pred.relationships.route.data.id;
+        var type = pred.type;
+        var time = (pred.attributes.stop_sequence == 1) ? pred.attributes.departure_time : pred.attributes.arrival_time;
+        var d = new Date(time);
+        // change time to a rounded number based on date d
+        time = Math.floor((d - now) / 60 / 1000);
+
+        var found = false;
+        // iterate through display[stop].routes to find if the route exists
+        for(var j = 0; j < display[stop].routes.length; j++) {
+            var elem = display[stop].routes[j];
+            if(elem.dest == dest && elem.route == route) {
+                var k = 0;
+                while(k < display[stop].routes[j].arrive.length && time > display[stop].routes[j].arrive[k][0]) k++;
+                display[stop].routes[j].arrive.splice(k,0,[time,type]);
+                found = true;
+                break;
             }
         }
-        pred[p.relationships.route.data.id].push(
-            {"time":Math.floor((new Date((p.attributes.departure_time == null ? p.attributes.arrival_time : p.attributes.departure_time)) - now)/60000),
-             "type":type
-            });
-    }
-
-    // Sort each route's predictions
-    for(var key in pred) {
-        pred[key] = pred[key].filter(function(val, i, arr) {return val.time > 0;});
-        pred[key] = pred[key].sort(function(a, b){return a.time-b.time;});
-    }
-    console.log(pred);
-
-    // htmlify the predictions
-    var html = "<h2 class=\"stoptitle\">" + this["stops"].attributes.name + "</h2><p>stop ID: " + this.stopID + "</p><ul>";
-    for(key in pred) {
-        var dest = outbound[key] + " <--> " + inbound[key];
-	    if(this.stopID in hard_ids) {
-            dest = (hard_ids[this.stopID][key] == 0) ? outbound[key] : inbound[key];
+        if(!found) {
+            display[stop].routes.push({
+                "dest": dest,
+                "route": route,
+                "arrive": [[time,type]]});
         }
-        html += "<div class=\"bus\"><li><h1 class=\"busnum\">" + key + "</h1><div class=\"busdest\">" + dest + "</div></li><ul>";
-        // add n predictions/scheduled arrivals
-        for(var i = 0; i == 0 || (i < n && i < pred[key].length); i++) {
-            html += "<li class=\"buspred\">" + predf(pred[key][i]) + "</li>";
-        }
-        html += "</ul></div>";
     }
-    html += "</ul>";
-
-    html += this.affix;
-
-    return html;
+    console.log(display);
+    htmlify(display);
 }
 
-// Update handler
-Stop.prototype.update_handler = function() {
-    console.log("unhandled update");
+var htmlify = function(display) {
+    var html = "";
+    html += "<div id=\"MyClockDisplay\" class=\"clock\">" + $("#MyClockDisplay").html() + "</div>";
+    for(var stopID in display) {
+        html += "<div id=\"" + stopID + "\" class=\"stop\">\<h2 class=\"stoptitle\">" + display[stopID].name + "</h2><p>stop ID: " + stopID + "</p><ul>";
+        for(var i = 0; i < display[stopID].routes.length ; i++) {
+            var route = display[stopID].routes[i];
+            html += "<ul><div class=\"bus\"><li><h1 class=\"busnum\">" + route.route + "</h1>" + "<div class=\"busdest\">" + route.dest + "</div></li><ul>";
+            for(var j = 0; j < 3 && j < route.arrive.length; j++) {
+                var time = route.arrive[j][0];
+                var text = (time < 2) ? "Arriving" : time + " mins";
+                text += (route.arrive[j][1] == "schedule") ? "*" : "";
+                html += "<li class=\"buspred\">" + text + "</li>";
+            }
+            html += "</ul></div>";
+        }
+        html +="</div>";
+    }
+    html += "</ul><div id=\"SchedNote\">*Scheduled Arrivals</div></div>";
+
+    // update the display
+    $("#run").html(html);
+    disp_current();
 }
 
-// Update and run function when done
-Stop.prototype.update = function(t=10) {
-    this.update_dynamic();
-    clearInterval(this.interval);
-    var cthis = this;
-    this.interval = setInterval(function () {
-        if(cthis.requests_done()) {
-            clearInterval(cthis.interval);
-            cthis.update_handler();
-        }
-    }, t);
+// Put together the request
+var update_data = function() {
+    var now = new Date();
+    var h = now.getHours();
+    var m = now.getMinutes();
+    function pad(str) { return (str + "").padStart(2,'0');}
+    if(h < 3) // new service day hasn't started
+        h += 24;
+
+    var min = pad(h) + ":" + pad(m);
+    // Set number of predictions taken here
+    var max = pad(h + 3) + ":" + pad(m);
+
+    send_json("schedules?include=prediction,stop,trip&filter[min_time]=" + min + "&filter[max_time]=" + max + "&filter[stop]=");
 }
+
+update_data();
+setInterval(update_data, 10000);
+
+// Stop Rotation
+var current = 0;
+function disp_current() {
+    $(".stop").hide();
+    $(".stop:eq(" + current + ")").show();
+}
+setInterval(function() {current++; current %= stopIDs.length; disp_current()}, 7000);
