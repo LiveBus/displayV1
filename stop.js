@@ -94,7 +94,7 @@ var htmlify = function(display) {
         html += "<div id=\"" + stopID + "\" class=\"stop\">\<h2 class=\"stoptitle\">" + display[stopID].name + "</h2><p>stop ID: " + stopID + "</p><ul>";
         for(var i = 0; i < display[stopID].routes.length ; i++) {
             var route = display[stopID].routes[i];
-            html += "<ul><div class=\"bus\"><li><h1 class=\"busnum\">" + route.route + "</h1>" + "<div class=\"busdest\">" + route.dest + "</div></li><ul>";
+            html += "<div class=\"bus\"><li><h1 class=\"busnum\">" + route.route + "</h1>" + "<div class=\"busdest\">" + route.dest + "</div></li><ul>";
             for(var j = 0; j < 3 && j < route.arrive.length; j++) {
                 var time = route.arrive[j][0];
                 var text = (time < 2) ? "Arriving" : time + " mins";
@@ -129,12 +129,55 @@ var update_data = function() {
 }
 
 update_data();
-setInterval(update_data, 10000);
+//setInterval(update_data, 10000);
 
 // Stop Rotation
 var current = 0;
+var page_max = 3;
+var page = 0;
+var overflow = false;
 function disp_current() {
     $(".stop").hide();
     $(".stop:eq(" + current + ")").show();
+    var buses = $(".stop:eq(" + current + ") .bus");
+    if(buses.length > page_max) {
+        buses.hide();
+        for(var i = page * page_max; i < buses.length && i < (page + 1) * page_max; i++) {
+            buses.eq(i).show();
+        }
+        overflow = (buses.length > (page + 1) * page_max);
+    }
+    else {
+        overflow = false;
+        buses.show();
+    }
 }
-setInterval(function() {current++; current %= stopIDs.length; disp_current()}, 7000);
+
+function set_page_max() {
+    var b = $(".stoptitle").eq(current).height();
+    b += $(".stoptitle").eq(current).next().height();
+    var m = $(".stop:eq(" + current + ") .bus:eq(0)").height();
+    var y = $(window).height() - 100;
+    console.log(b + " " + m + " " + y);
+    page_max = Math.floor((y-b)/m);
+    page_max = (page_max < 1) ? 1 : page_max;
+    console.log(page_max);
+}
+setTimeout(redraw, 1000);
+$(window).resize(redraw);
+
+function redraw() {
+    set_page_max();
+    disp_current();
+}
+
+setInterval(function() {
+    if(overflow)
+        page++;
+    else {
+        page = 0;
+        current++;
+        current %= stopIDs.length;
+    }
+    disp_current();
+}, 7000);
