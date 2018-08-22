@@ -55,8 +55,8 @@ li.buspred {
 
 .stoptitle {
     font-size: 50px;
-    margin:0px;
-    display:inline;
+    margin:50px 0px 0px 0px;
+    display:block;
     padding-right:250px;
 }
 
@@ -67,7 +67,7 @@ p {
 
 .clock {
     position:absolute;
-    top:10px;
+    top:60px;
     right:20px;
     font-size:30px;
     text-align: right;
