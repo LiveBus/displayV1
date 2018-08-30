@@ -129,7 +129,7 @@ var update_data = function() {
 }
 
 update_data();
-//setInterval(update_data, 10000);
+setInterval(update_data, 10000);
 
 // Stop Rotation
 var current = 0;
